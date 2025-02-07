@@ -1,0 +1,67 @@
+# Instructions for AIs
+
+This repository is .NET for Android.
+
+This is the main branch targeting .NET 10.
+
+## Nullable Reference Types
+
+When opting C# code into nullable reference types:
+
+* Add `#nullable enable` at the top of the file.
+
+* Don't *ever* use `!` to handle `null`!
+
+* Declare variables non-nullable, and check for `null` at entry points.
+
+* Use `throw new ArgumentNullException (nameof (parameter))` in `netstandard2.0` projects.
+
+* Use `ArgumentNullException.ThrowIfNull (parameter)` in Android projects that will be .NET 10+.
+
+* For MSBuild task properties like:
+
+```csharp
+public string Foo { get; set; }
+public ITaskItem [] Bar { get; set; }
+```
+
+Fix them such as:
+
+```csharp
+public string Foo { get; set; } = "";
+public ITaskItem [] Bar { get; set; } = [];
+```
+
+## Formatting
+
+C# code uses tabs (not spaces) and the Mono code-formatting style defined in `.editorconfig`
+
+* Your mission is to make diffs as absolutely as small as possible, preserving existing code formatting.
+
+* If you encounter additional spaces or formatting within existing code blocks, LEAVE THEM AS-IS.
+
+* If you encounter code comments, LEAVE THEM AS-IS.
+
+* Place a space prior to any parentheses `(` or `[`
+
+* Use `""` for empty string and *not* `string.Empty`
+
+* Use `[]` for empty arrays and *not* `Array.Empty<T>()`
+
+Examples of properly formatted code:
+
+```csharp
+Foo ();
+Bar (1, 2, "test");
+myarray [0] = 1;
+
+if (someValue) {
+    // Code here
+}
+
+try {
+    // Code here
+} catch (Exception e) {
+    // Code here
+}
+```
